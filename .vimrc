@@ -1,12 +1,13 @@
-" Move viminfo out of home
-set viminfo+=n~/.vim/viminfo
-set nocompatible
-" Attempt to determine the type of a file based on its name and possibly its
-" contents. Use this to allow intelligent auto-indenting for each filetype,
-" and for plugins that are filetype specific.
-filetype indent plugin on
+"--------------------------------------------------------------------
+" VIMRC MUST HAVES
+"--------------------------------------------------------------------
+set nocompatible            " Don't keep compatability with vi
+filetype indent plugin on   " Smart file indenting
+syntax enable               " Enable syntax highlighting
+"--------------------------------------------------------------------
+" PLUGINS
+"--------------------------------------------------------------------
 
-" PLUGINS ----------------------------
 call plug#begin('~/.vim/plugged')
 
 Plug 'flazz/vim-colorschemes'
@@ -16,140 +17,73 @@ Plug 'vim-airline/vim-airline'
 Plug 'tomtom/tcomment_vim'
 
 Plug 'lervag/vimtex'
-let g:vimtex_view_method='zathura'
-let g:vimtex_quickfix_mode=0
+  let g:vimtex_view_method='zathura'
+  let g:vimtex_quickfix_mode=0
 
 call plug#end()
-" ------------------------------------
+
+" Viewing
+colorscheme badwolf
+autocmd FileType * setlocal tw=70
 
 "Latex
-autocmd FileType plaintex setlocal tw=80
+autocmd FileType * hi clear Conceal
+set conceallevel=2
 let g:tex_flavor='latex'
-set conceallevel=3
-let g:tex_conceal='abdmg'
+let g:tex_conceal='abdgm'
 
-" Enable syntax highlighting
-syntax enable
 
-" Colorscheme
-colorscheme badwolf
+"--------------------------------------------------------------------
+" USABILITY OPTIONS
+"--------------------------------------------------------------------
 
-" I want the preview window to show up at the bottom
-set splitbelow
-set completeopt-=preview
+set autoindent        " Keep same indent when returning
+set nostartofline     " Remove default movement to startofline
+set ruler             " Display the cursor position
+set laststatus=2      " Always display the status line
+set confirm           " Instead of failing raise a dialogue
+set visualbell        " Use visual bell instead of beeping
+set t_vb=             " Reset the terminal code for the visual bell
+set mouse=a           " Enable use of the mouse for all modes
+set cmdheight=2       " Set the command window height to 2 lines
+set number            " Display line numbers on the left
+set pastetoggle=<F12> " Use <F12> to toggle 'paste'
+set ignorecase        " Case insensitive search
+set smartcase         " Case sensitive if capitals are used
+set hlsearch          " Highlight searches
+set splitbelow        " Preview window at the bottom
+set hidden            " Don't destroy buffers
+set wildmenu          " Better command-line completion
+set showcmd           " Show partial commands
+set encoding=utf-8    " Use UTF-8 for displaying vim
 
-" One such option is the 'hidden' option, which allows you to re-use the same
-" window and switch from an unsaved buffer without saving it first. Also allows
-" you to keep an undo history for multiple files when re-using the same window
-" in this way. Note that using persistent undo also lets you undo in multiple
-" files even in the same window, but is less efficient and is actually designed
-" for keeping undo history after closing Vim entirely. Vim will complain if you
-" try to quit without saving, and swap files will keep you safe if your computer
-" crashes.
-set hidden
-
-" Note that not everyone likes working this way (with the hidden option).
-" Alternatives include using tabs or split windows instead of re-using the same
-" window as mentioned above, and/or either of the following options:
-" set confirm
-" set autowriteall
-
-" Better command-line completion
-set wildmenu
-
-" Show partial commands in the last line of the screen
-set showcmd
-
-" Highlight searches
-set hlsearch
-
-"------------------------------------------------------------
-" Usability options
-
-" Autocomments
-"autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
-" Use case insensitive search, except when using capital letters
-set ignorecase
-set smartcase
-
-" Allow backspacing over autoindent, line breaks and start of insert action
-set backspace=indent,eol,start
-
-" When opening a new line and no filetype-specific indenting is enabled, keep
-" the same indent as the line you're currently on. Useful for READMEs, etc.
-set autoindent
-
-" Stop certain movements from always going to the first character of a line.
-" While this behaviour deviates from that of Vi, it does what most users
-" coming from other editors would expect.
-set nostartofline
-
-" Display the cursor position on the last line of the screen or in the status
-" line of a window
-set ruler
-
-" Always display the status line, even if only one window is displayed
-set laststatus=2
-
-" Instead of failing a command because of unsaved changes, instead raise a
-" dialogue asking if you wish to save changed files.
-set confirm
-
-" Use visual bell instead of beeping when doing something wrong
-set visualbell
-
-" And reset the terminal code for the visual bell. If visualbell is set, and
-" this line is also included, vim will neither flash nor beep. If visualbell
-" is unset, this does nothing.
-set t_vb=
-
-" Enable use of the mouse for all modes
-set mouse=a
-
-" Set the command window height to 2 lines, to avoid many cases of having to
-" "press <Enter> to continue"
-set cmdheight=2
-
-" Display line numbers on the left
-set number
-
-" Quickly time out on keycodes, but never time out on mappings
+" Quickly time out on keycodes, but never on mappings
 set notimeout ttimeout ttimeoutlen=200
 
-" Use <F12> to toggle between 'paste' and 'nopaste'
-set pastetoggle=<F12>
+" Allow backspacing over autoindent
+set backspace=indent,eol,start
 
+"--------------------------------------------------------------------
+" INDENTATION OPTIONS
+"--------------------------------------------------------------------
+set expandtab         " Tab becomes spaces
+set shiftwidth=2      " Spaces for autoindent
+set softtabstop=2     " Tab -> spaces width
 
-"------------------------------------------------------------
-" Indentation options
+"--------------------------------------------------------------------
+" MAPPINGS
+"--------------------------------------------------------------------
 
-" Indentation settings for using spaces instead of tabs.
-" Do not change 'tabstop' from its default value of 8 with this setup.
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-
-" Indentation settings for using hard tabs for indent
-"set shiftwidth=4
-"set tabstop=4
-
-
-"------------------------------------------------------------
-" Mappings
-
-" Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
-" which is the default
 map Y y$
+:map <F1> <Esc>
+:imap <F1> <Esc>
 
 " Remove trailing whitespace with <F5>
 :nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
-:map <F1> <Esc>
-:imap <F1> <Esc>
-
-"------------------------------------------------------------
-" Un-mappings
+"--------------------------------------------------------------------
+" UN-MAPPINGS
+"--------------------------------------------------------------------
 
 " Disable Ex mode
 :map Q <nop>
