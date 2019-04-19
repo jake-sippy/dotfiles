@@ -1,26 +1,32 @@
+" Move viminfo out of home
+set viminfo+=n~/.vim/viminfo
 set nocompatible
-filetype off
-
-" set the runtime path to include vundle
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle
-Plugin 'VundleVim/Vundle.vim'
-
-" Plugins
-Plugin 'flazz/vim-colorschemes'
-Plugin 'vim-airline/vim-airline'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'nathanaelkane/vim-indent-guides'
-
-" end Vundle
-call vundle#end()
-
 " Attempt to determine the type of a file based on its name and possibly its
 " contents. Use this to allow intelligent auto-indenting for each filetype,
 " and for plugins that are filetype specific.
 filetype indent plugin on
+
+" PLUGINS ----------------------------
+call plug#begin('~/.vim/plugged')
+
+Plug 'flazz/vim-colorschemes'
+
+Plug 'vim-airline/vim-airline'
+
+Plug 'tomtom/tcomment_vim'
+
+Plug 'lervag/vimtex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+
+call plug#end()
+" ------------------------------------
+
+"Latex
+autocmd FileType plaintex setlocal tw=80
+let g:tex_flavor='latex'
+set conceallevel=3
+let g:tex_conceal='abdmg'
 
 " Enable syntax highlighting
 syntax enable
@@ -28,20 +34,9 @@ syntax enable
 " Colorscheme
 colorscheme badwolf
 
-"Latex
-map <Leader>ll :!xelatex %<Return>
-autocmd FileType plaintex setlocal tw=79
-
-"YCM
-let g:ycm_global_ycm_extra_conf = '/usr/share/vim/vimfiles/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-let g:ycm_server_python_interpreter = '/usr/bin/python2'
-let g:ycm_show_diagnostics_ui = 0
-
 " I want the preview window to show up at the bottom
 set splitbelow
 set completeopt-=preview
-"------------------------------------------------------------
-" Must have options
 
 " One such option is the 'hidden' option, which allows you to re-use the same
 " window and switch from an unsaved buffer without saving it first. Also allows
@@ -71,7 +66,7 @@ set hlsearch
 "------------------------------------------------------------
 " Usability options
 
-" Don't add those stupid autocomments
+" Autocomments
 "autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Use case insensitive search, except when using capital letters
