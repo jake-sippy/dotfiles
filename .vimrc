@@ -20,6 +20,8 @@ Plug 'lervag/vimtex'
   let g:vimtex_view_method='zathura'
   let g:vimtex_quickfix_mode=0
 
+Plug 'takac/vim-hardtime'
+
 call plug#end()
 
 " Viewing
@@ -47,6 +49,7 @@ set t_vb=             " Reset the terminal code for the visual bell
 set mouse=a           " Enable use of the mouse for all modes
 set cmdheight=2       " Set the command window height to 2 lines
 set number            " Display line numbers on the left
+set relativenumber    " Display line numbers relavtive to cursor line
 set pastetoggle=<F12> " Use <F12> to toggle 'paste'
 set ignorecase        " Case insensitive search
 set smartcase         " Case sensitive if capitals are used
