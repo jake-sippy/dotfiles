@@ -1,105 +1,93 @@
 [colors]
 background = #88000000
 foreground = #efefef
+solid-black = #000000
 light-foreground = #66eeeeee
 dark-background = #bb000000
 red-background = #bb330000
+green = #00aa00
 
-
-[bar/top]
-width = 100%
-height = 30
-offset-x = 0
-offset-y = -1
-monitor = LVDS-1
-;bottom = true
-
-background = ${colors.background}
-foreground = ${colors.foreground}
-
-underline-size = 2
-underline-color = ${colors.foreground}
-
-spacing = 1
-padding-left = 0
-padding-right = 0
-module-margin-left = 0
+[bars]
+monitor-left        = ${env:L_MONITOR}
+monitor-right       = ${env:R_MONITOR}
+width               = 100%
+height              = 31
+bottom              = false
+underline-size      = 5
+spacing             = 1
+padding-left        = 0
+padding-right       = 0
+module-margin-left  = 0
 module-margin-right = 0
 
+[fonts]
 font-0 = Noto Sans:pixelsize=10;0
-;font-0 = Inconsolata:pixelsize=10;0
-font-1 = FontAwesome:size=10;2
-font-2 = siji:pixelsize=10;0
-
-modules-left = bspwm xwindow
-modules-center =
-modules-right = battery volume wifi date
-
-wm-restack = bspwm
+font-1 = Font Awesome 5 Free Regular:pixelsize=8;0
+font-2 = Font Awesome 5 Free Solid:pixelsize=8;0
+font-3 = unifont:pixelsize=8;0
 
 [bar/left]
-width = 100%
-height = 30
-offset-x = 0
-offset-y = -1
-monitor = HDMI-2
-;bottom = true
+monitor  = ${bars.monitor-left}
+
+modules-left = bspwm xwindow
+modules-center = mpd
+modules-right = volume network date
+
+width    = ${bars.width}
+height   = ${bars.height}
+bottom   = ${bars.bottom}
+
+underline-size  = ${bars.underline-size} 
+underline-color = ${colors.foreground}
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-underline-size = 2
-underline-color = ${colors.foreground}
+spacing             = ${bars.spacing}
+padding-left        = ${bars.padding-left}
+padding-right       = ${bars.padding-right} 
+module-margin-left  = ${bars.module-margin-left} 
+module-margin-right = ${bars.module-margin-right}
 
-spacing = 1
-padding-left = 0
-padding-right = 0
-module-margin-left = 0
-module-margin-right = 0
-
-font-0 = Noto Sans:pixelsize=10;0
-;font-0 = Inconsolata:pixelsize=10;0
-font-1 = FontAwesome:size=10;2
-font-2 = siji:pixelsize=10;0
-
-modules-left = bspwm xwindow
-modules-center =
-modules-right = battery volume wifi date
+font-0 = ${fonts.font-0}
+font-1 = ${fonts.font-1}
+font-2 = ${fonts.font-2}
+font-3 = ${fonts.font-3}
 
 wm-restack = bspwm
 
 [bar/right]
-width = 100%
-height = 30
-offset-x = 0
-offset-y = -1
-monitor = VGA-1
-;bottom = true
+monitor  = ${bars.monitor-right}
+
+modules-left = bspwm xwindow
+modules-center =
+modules-right = volume network date
+
+width    = ${bars.width} 
+height   = ${bars.height}
+bottom   = ${bars.bottom}
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-underline-size = 2
+underline-size  = ${bars.underline-size} 
 underline-color = ${colors.foreground}
 
-spacing = 1
-padding-left = 0
-padding-right = 0
-module-margin-left = 0
-module-margin-right = 0
+spacing             = ${bars.spacing} 
+padding-left        = ${bars.padding-left} 
+padding-right       = $bars.padding-right} 
+module-margin-left  = ${bars.module-margin-left}
+module-margin-right = ${bars.module-margin-right}
 
-font-0 = Noto Sans:pixelsize=10;0
-;font-0 = Inconsolata:pixelsize=10;0
-font-1 = FontAwesome:size=10;2
-font-2 = siji:pixelsize=10;0
-
-modules-left = bspwm xwindow
-modules-center =
-modules-right = battery volume wifi date
+font-0 = ${fonts.font-0}
+font-1 = ${fonts.font-1}
+font-2 = ${fonts.font-2}
+font-3 = ${fonts.font-3}
 
 wm-restack = bspwm
 
-; MODULES
+
+; MODULES //////////////////////////////////////
 
 [module/bspwm]
 type = internal/bspwm
@@ -107,7 +95,8 @@ type = internal/bspwm
 format = <label-state> <label-mode>
 
 label-focused = %name%
-label-focused-background = ${colors.dark-background}
+label-focused-background = ${colors.foreground}
+label-focused-foreground = ${colors.solid-black}
 label-focused-underline = ${colors.foreground}
 label-focused-padding = 2
 
@@ -127,16 +116,16 @@ type = internal/xwindow
 label = %title:0:50:...%
 label-padding = 4
 
-[module/wifi]
+[module/network]
 type = internal/network
-interface=wlp2s0
+interface=enp7s0
 interval = 3.0
 
-label-connected =  %essid%
+label-connected =  %local_ip%
 label-connected-foreground = #eefafafa
 label-connected-padding = 3
 
-label-disconnected =   not connected
+label-disconnected = not connected
 label-disconnected-foreground = ${colors.light-foreground}
 label-disconnected-padding = 3
 
@@ -146,62 +135,20 @@ type = internal/date
 ; Seconds to sleep between updates
 interval = 1.0
 
-; See "man date" for details on how to format the date string
-; NOTE: if you want to use syntax tags here you need to use %%{...}
-date = %a %b %d
-time = %r
-
 ; if `date-alt` or `time-alt` is defined, clicking
 ; the module will toggle between formats
-date-alt = %A, %d %B %Y
-time-alt = %r
+date = %A, %d %B %Y
+time = %r
 
 label = %date% %time%
-format =    <label>
+format =   <label>
 format-background = ${colors.dark-background}
 format-padding = 3
 
-[module/padding]
-type = custom/text
-content =
-content-foreground = #00000000
-content-background = #55000000
-
-[module/battery]
-type = internal/battery
-
-full-at = 99
-
-battery = BAT0
-adapter = AC0
-
-poll-interval = 5
-
-format-charging = <animation-charging> <label-charging>
-format-discharging = <ramp-capacity> <label-discharging>
-format-full = <ramp-capacity> <label-full>
-label-charging = %percentage%
-label-discharging = %percentage%
-label-full = %percentage%
-format-charging-padding = 3
-format-discharging-padding = 3
-format-full-padding = 3
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-animation-charging-framerate = 750
 
 [module/volume]
-type = internal/alsa
+type = internal/pulseaudio
+sink = alsa_output.pci-0000_0b_00.3.analog-stereo
 
 format-volume = <ramp-volume> <label-volume>
 format-muted = <label-muted>
@@ -215,3 +162,61 @@ ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
 ramp-headphones-0 = 
+
+[module/cpu]
+type = internal/cpu
+interval = 1
+format = <label> <ramp-coreload>
+label = CPUS
+ramp-coreload-spacing = 1
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+
+[module/mpd]
+type = internal/mpd
+
+host = 127.0.0.1
+port = 6600
+
+interval = 1
+
+format-online = <icon-prev> <icon-seekb> <icon-stop> <toggle> <icon-seekf> <icon-next>  <icon-repeat> <icon-random>  <bar-progress> <label-time>  <label-song>
+;format-offline = <label-offline>
+
+label-offline = mpd is offline
+
+label-song = %artist% - %title%
+
+label-time = (%elapsed% / %total%)
+
+; Only applies if <icon-X> is used
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
+icon-seekb = 
+icon-seekf = 
+icon-random = 
+icon-repeat = 
+
+; Used to display the state of random/repeat/repeatone/single
+; Only applies if <icon-[random|repeat|repeatone|single]> is used
+toggle-on-foreground = ${colors.foreground}
+toggle-off-foreground = ${colors.light-foreground}
+
+; Only applies if <bar-progress> is used
+bar-progress-width = 45
+bar-progress-indicator =
+bar-progress-fill = █
+bar-progress-empty = █
+
+bar-progress-fill-foreground = ${colors.green}
+bar-progress-empty-foreground = ${colors.light-foreground}
+bar-progress-indicator-foreground = ${colors.foreground}

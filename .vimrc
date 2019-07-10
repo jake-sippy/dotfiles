@@ -4,35 +4,41 @@
 set nocompatible            " Don't keep compatability with vi
 filetype indent plugin on   " Smart file indenting
 syntax enable               " Enable syntax highlighting
+
 "--------------------------------------------------------------------
 " PLUGINS
 "--------------------------------------------------------------------
 
 call plug#begin('~/.vim/plugged')
-
 Plug 'flazz/vim-colorschemes'
 
 Plug 'vim-airline/vim-airline'
 
 Plug 'tomtom/tcomment_vim'
 
+Plug 'takac/vim-hardtime'
+
 Plug 'lervag/vimtex'
   let g:vimtex_view_method='zathura'
   let g:vimtex_quickfix_mode=0
 
-Plug 'takac/vim-hardtime'
+" Plug 'sirver/UltiSnips'
+"   let g:UltiSnipsExpandTrigger="<tab>"
+"   let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"   let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 call plug#end()
 
 " Viewing
 colorscheme badwolf
-autocmd FileType * setlocal tw=70
+autocmd FileType * setlocal tw=80
 
 "Latex
 autocmd FileType * hi clear Conceal
 set conceallevel=2
 let g:tex_flavor='latex'
-let g:tex_conceal='abdgm'
+" let g:tex_conceal='abdgm'
+let g:tex_conceal='abgm'
 
 
 "--------------------------------------------------------------------
@@ -49,7 +55,7 @@ set t_vb=             " Reset the terminal code for the visual bell
 set mouse=a           " Enable use of the mouse for all modes
 set cmdheight=2       " Set the command window height to 2 lines
 set number            " Display line numbers on the left
-set relativenumber    " Display line numbers relavtive to cursor line
+" set relativenumber    " Display line numbers relavtive to cursor line
 set pastetoggle=<F12> " Use <F12> to toggle 'paste'
 set ignorecase        " Case insensitive search
 set smartcase         " Case sensitive if capitals are used

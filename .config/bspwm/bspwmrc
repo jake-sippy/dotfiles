@@ -2,13 +2,15 @@
 
 sxhkd &
 
-bspc monitor LVDS-1 -d 1 2 3 4 5 6 7 8 9 10
+#bspc monitor $L_MONITOR -d 1 2 3
+#bspc monitor $R_MONITOR -d 4 5 6
+bspc monitor DP-1 -d 1 2 3 4 5 6
 
-bspc config top_padding 30
+bspc config top_padding          30
 bspc config border_width         2
-bspc config window_gap           5
+bspc config window_gap           10
 
-bspc config split_ratio          0.52
+bspc config split_ratio          0.50
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
@@ -27,7 +29,10 @@ bspc rule -a "Gnomecast" state=floating
 bspc rule -a "feh" state=floating 
 bspc rule -a "Matplotlib" state=floating 
 bspc rule -a "matplotlib" state=floating 
+bspc rule -a "Steam" state=floating 
+bspc rule -a "zathura" state=tiled
+bspc rule -a "Zathura" state=tiled
 
 # startup
-$HOME/.scripts/fehbg
-$HOME/.scripts/launch.sh
+$HOME/.fehbg
+$HOME/.config/polybar/launch.sh

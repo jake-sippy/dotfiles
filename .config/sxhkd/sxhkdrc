@@ -4,12 +4,12 @@
 
 # terminal emulator
 super + Return
-        termite -d /home/jake
+        termite
 
 
 # program launcher
 super + d
-        rofi -show run -theme jake
+        rofi -show run -theme jsippy -m -4
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -34,10 +34,15 @@ super + shift + m
         pactl set-sink-mute 0 toggle
 
 super + shift + v
-        rm -rf /home/jake/.cache/vim/swap/*
+        rm -rf ~/.cache/vim/swap/*
 
-super + shift + backslash
-        ~/.scripts/extern.sh
+# mpd hotkeys
+
+
+# scort key and options
+super + shift + s
+        sleep 0.2; \
+        scrot -sm %H:%M:%S.png -e 'mkdir ~/pictures/scrot/%b%d/; mv $f ~/pictures/scrot/%b%d/' > /dev/null 2>&1
 
 #
 # bspwm hotkeys
@@ -68,11 +73,15 @@ super + {t,shift + t,s,f}
 #
 
 # focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-        bspc node -{f,s} {west,south,north,east}
 
-super + {_,shift + }{Left,Down,Up,Right}
-        bspc node -{f,s} {west,south,north,east}
+super + {Left,Down,Up,Right}
+        bspc node -f {west,south,north,east}
+
+super + shift + {Left,Down,Up,Right}
+        bspc node -s {west,south,north,east} --follow
+
+super + ctrl + {Left,Right}
+        bspc node -m {west,east} --follow
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
