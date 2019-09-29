@@ -1,10 +1,10 @@
 #! /bin/sh
 
-sxhkd &
+export MONITOR=LVDS-1
 
-bspc monitor LVDS-1 -d 1 2 3 4 5 6 7 8 9 10
+bspc monitor $MONITOR -d 1 2 3 4 5
 
-bspc config top_padding 30
+bspc config top_padding          30
 bspc config border_width         2
 bspc config window_gap           5
 
@@ -27,7 +27,11 @@ bspc rule -a "Gnomecast" state=floating
 bspc rule -a "feh" state=floating 
 bspc rule -a "Matplotlib" state=floating 
 bspc rule -a "matplotlib" state=floating 
+bspc rule -a "RuneLite Launcher" state=floating 
 
 # startup
-$HOME/.scripts/fehbg
-$HOME/.scripts/launch.sh
+sxhkd &
+compton -b --config $HOME/.config/compton/compton.conf
+
+$HOME/.config/fehbg
+$HOME/.config/polybar/launch.sh &

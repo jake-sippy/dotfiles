@@ -4,12 +4,11 @@
 
 # terminal emulator
 super + Return
-        termite -d /home/jake
-
+        termite
 
 # program launcher
 super + d
-        rofi -show run -theme jake
+        $HOME/.config/sxhkd/polybar_rofi.sh
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -24,6 +23,12 @@ XF86AudioLowerVolume
 XF86AudioMute
         pactl set-sink-mute 0 toggle
 
+XF86AudioMicMute
+        pactl set-source-mute 1 toggle
+
+XF86TouchpadToggle
+        $HOME/.config/sxhkd/toggle-touchpad.sh
+
 super + shift + plus
         pactl set-sink-mute 0 0 && pactl set-sink-volume 0 +5%
 
@@ -35,9 +40,6 @@ super + shift + m
 
 super + shift + v
         rm -rf /home/jake/.cache/vim/swap/*
-
-super + shift + backslash
-        ~/.scripts/extern.sh
 
 #
 # bspwm hotkeys

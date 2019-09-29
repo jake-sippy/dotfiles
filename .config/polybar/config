@@ -1,105 +1,51 @@
+; GLOBALS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 [colors]
-background = #88000000
-foreground = #efefef
+background = #99000000
+;foreground = #efefef
+foreground = #ffffff
 light-foreground = #66eeeeee
-dark-background = #bb000000
+dark-background = #cc000000
 red-background = #bb330000
 
 
+[fonts]
+font-0 = Inconsolata:pixelsize=11;2
+font-1 = Font\ Awesome\ 5\ Free\ Solid:pixelsize=10;1
+
+; BARS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 [bar/top]
+enable-ipc = true
 width = 100%
 height = 30
 offset-x = 0
 offset-y = -1
-monitor = LVDS-1
-;bottom = true
+monitor = ${env:MONITOR}
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-underline-size = 2
+underline-size = 3
 underline-color = ${colors.foreground}
 
-spacing = 1
+font-0 = ${fonts.font-0}
+font-1 = ${fonts.font-1}
+
+spacing = 0
 padding-left = 0
 padding-right = 0
-module-margin-left = 0
+module-margin-left = 1
 module-margin-right = 0
-
-font-0 = Noto Sans:pixelsize=10;0
-;font-0 = Inconsolata:pixelsize=10;0
-font-1 = FontAwesome:size=10;2
-font-2 = siji:pixelsize=10;0
 
 modules-left = bspwm xwindow
 modules-center =
-modules-right = battery volume wifi date
+modules-right = wifi volume battery date
+tray-position = right
 
 wm-restack = bspwm
 
-[bar/left]
-width = 100%
-height = 30
-offset-x = 0
-offset-y = -1
-monitor = HDMI-2
-;bottom = true
-
-background = ${colors.background}
-foreground = ${colors.foreground}
-
-underline-size = 2
-underline-color = ${colors.foreground}
-
-spacing = 1
-padding-left = 0
-padding-right = 0
-module-margin-left = 0
-module-margin-right = 0
-
-font-0 = Noto Sans:pixelsize=10;0
-;font-0 = Inconsolata:pixelsize=10;0
-font-1 = FontAwesome:size=10;2
-font-2 = siji:pixelsize=10;0
-
-modules-left = bspwm xwindow
-modules-center =
-modules-right = battery volume wifi date
-
-wm-restack = bspwm
-
-[bar/right]
-width = 100%
-height = 30
-offset-x = 0
-offset-y = -1
-monitor = VGA-1
-;bottom = true
-
-background = ${colors.background}
-foreground = ${colors.foreground}
-
-underline-size = 2
-underline-color = ${colors.foreground}
-
-spacing = 1
-padding-left = 0
-padding-right = 0
-module-margin-left = 0
-module-margin-right = 0
-
-font-0 = Noto Sans:pixelsize=10;0
-;font-0 = Inconsolata:pixelsize=10;0
-font-1 = FontAwesome:size=10;2
-font-2 = siji:pixelsize=10;0
-
-modules-left = bspwm xwindow
-modules-center =
-modules-right = battery volume wifi date
-
-wm-restack = bspwm
-
-; MODULES
+; MODULES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [module/bspwm]
 type = internal/bspwm
@@ -109,36 +55,40 @@ format = <label-state> <label-mode>
 label-focused = %name%
 label-focused-background = ${colors.dark-background}
 label-focused-underline = ${colors.foreground}
-label-focused-padding = 2
+label-focused-padding = 1
 
 label-occupied = %name%
-label-occupied-padding = 2
+label-occupied-background = ${colors.dark-background}
+label-occupied-padding = 1
 
 label-urgent = %name%
 label-urgent-background = ${colors.red-background}
-label-urgent-padding = 2
+label-urgent-padding = 1
 
 label-empty = %name%
 label-empty-foreground = ${colors.light-foreground}
-label-empty-padding = 2
+label-empty-padding = 1
+
 
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:50:...%
-label-padding = 4
+label-padding = 1
+
 
 [module/wifi]
 type = internal/network
-interface=wlp2s0
-interval = 3.0
+interface=wlp3s0
+interval = 0.5
 
-label-connected =  %essid%
+label-connected =  %essid% (%downspeed% | %upspeed%)
 label-connected-foreground = #eefafafa
-label-connected-padding = 3
+label-connected-padding = 1
 
-label-disconnected =   not connected
+label-disconnected =  not connected
 label-disconnected-foreground = ${colors.light-foreground}
-label-disconnected-padding = 3
+label-disconnected-padding = 1
+
 
 [module/date]
 type = internal/date
@@ -157,15 +107,10 @@ date-alt = %A, %d %B %Y
 time-alt = %r
 
 label = %date% %time%
-format =    <label>
+format =  <label>
 format-background = ${colors.dark-background}
-format-padding = 3
+format-padding = 1
 
-[module/padding]
-type = custom/text
-content =
-content-foreground = #00000000
-content-background = #55000000
 
 [module/battery]
 type = internal/battery
@@ -173,19 +118,20 @@ type = internal/battery
 full-at = 99
 
 battery = BAT0
-adapter = AC0
+adapter = AC
 
-poll-interval = 5
+poll-interval = 1
 
-format-charging = <animation-charging> <label-charging>
+; format-charging = <animation-charging> <label-charging>
+format-charging =  <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
 format-full = <ramp-capacity> <label-full>
-label-charging = %percentage%
-label-discharging = %percentage%
+label-charging = %percentage%% (%time%)
+label-discharging = %percentage%% (%time%)
 label-full = %percentage%
-format-charging-padding = 3
-format-discharging-padding = 3
-format-full-padding = 3
+format-charging-padding = 1
+format-discharging-padding = 1
+format-full-padding = 1
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -193,25 +139,33 @@ ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-animation-charging-framerate = 750
+; animation-charging-0 = 
+; animation-charging-1 = 
+; animation-charging-2 = 
+; animation-charging-3 = 
+; animation-charging-4 = 
+; animation-charging-framerate = 750
+
 
 [module/volume]
-type = internal/alsa
+type = internal/pulseaudio
+
+sink = alsa_output.pci-0000_00_1b.0.analog-stereo
+
+use-ui-max = false
 
 format-volume = <ramp-volume> <label-volume>
 format-muted = <label-muted>
 label-volume = %percentage%
-label-muted =   -----
+label-muted =   ---
 label-muted-foreground = #aaa
-format-volume-padding = 2
-format-muted-padding = 2
+format-volume-padding = 1
+format-muted-padding = 1
 
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
-ramp-headphones-0 = 
+
+
+/* vim:ft=dosini
+
