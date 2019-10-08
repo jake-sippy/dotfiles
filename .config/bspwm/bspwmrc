@@ -1,7 +1,5 @@
 #! /bin/sh
 
-export MONITOR=LVDS-1
-
 bspc monitor $MONITOR -d 1 2 3 4 5
 
 bspc config top_padding          30
@@ -28,6 +26,7 @@ bspc rule -a "feh" state=floating
 bspc rule -a "Matplotlib" state=floating 
 bspc rule -a "matplotlib" state=floating 
 bspc rule -a "RuneLite Launcher" state=floating 
+bspc rule -a "Zathura" state=tiled
 
 # startup
 sxhkd &
